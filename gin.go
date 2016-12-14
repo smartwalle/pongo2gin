@@ -18,8 +18,8 @@ type GinRender struct {
 	pongo2render.Render
 }
 
-type GinHTML struct {
-	*pongo2render.HTML
+type GinTemplate struct {
+	*pongo2render.Template
 	data interface{}
 }
 
@@ -30,15 +30,15 @@ func NewGinRender(templateDir string) *GinRender {
 }
 
 func (this GinRender) Instance(name string, data interface{}) render.Render {
-	var gHtml = &GinHTML{}
-	var h = this.GetHTML(name)
-	gHtml.HTML = h
+	var gHtml = &GinTemplate{}
+	var h = this.Template(name)
+	gHtml.Template = h
 	gHtml.data = data
 	return gHtml
 }
 
-func (this *GinHTML) Render(w http.ResponseWriter) (err error) {
-	return this.HTML.ExecuteWriter(w, this.data)
+func (this *GinTemplate) Render(w http.ResponseWriter) (err error) {
+	return this.Template.ExecuteWriter(w, this.data)
 }
 
 
