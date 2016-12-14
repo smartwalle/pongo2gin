@@ -41,3 +41,20 @@ func (this *GinHTML) Render(w http.ResponseWriter) (err error) {
 	return this.HTML.ExecuteWriter(w, this.data)
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+const k_PONGO_TO_GIN_KEY = "pongo2gin"
+
+type Context interface {
+	Set(key string, value interface{})
+
+	MustGet(key string) interface{}
+}
+
+func FromContext(ctx Context) *GinRender {
+	return ctx.MustGet(k_PONGO_TO_GIN_KEY).(*GinRender)
+}
+
+func ToContext(ctx Context, r *GinRender) {
+	ctx.Set(k_PONGO_TO_GIN_KEY, r)
+}
