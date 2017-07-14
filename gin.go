@@ -41,6 +41,9 @@ func (this *GinTemplate) Render(w http.ResponseWriter) (err error) {
 	return this.Template.ExecuteWriter(w, this.data)
 }
 
+func (this *GinTemplate) WriteContentType(w http.ResponseWriter) {
+	pongo2render.WriteContentType(w, []string{"text/html; charset=utf-8"})
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 const k_PONGO_TO_GIN_KEY = "pongo2gin"
