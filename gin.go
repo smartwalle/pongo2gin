@@ -1,9 +1,9 @@
 package pongo2gin
 
 import (
-	"net/http"
 	"github.com/gin-gonic/gin/render"
 	"github.com/smartwalle/pongo2render"
+	"net/http"
 )
 
 //	var router = gin.Default()
@@ -14,7 +14,6 @@ import (
 //	})
 //	router.Run("localhost:9005")
 
-// --------------------------------------------------------------------------------
 type HTMLRender struct {
 	pongo2render.Render
 }
@@ -41,7 +40,6 @@ func (this *HTMLRender) InstanceFromString(tpl string, data interface{}) render.
 	return gHtml
 }
 
-// --------------------------------------------------------------------------------
 type Template struct {
 	*pongo2render.Template
 	data interface{}
@@ -55,8 +53,7 @@ func (this *Template) WriteContentType(w http.ResponseWriter) {
 	pongo2render.WriteContentType(w, []string{"text/html; charset=utf-8"})
 }
 
-// --------------------------------------------------------------------------------
-const k_PONGO_TO_GIN_KEY = "pongo2gin"
+const key = "pongo2gin"
 
 type Context interface {
 	Set(key string, value interface{})
@@ -65,9 +62,9 @@ type Context interface {
 }
 
 func FromContext(ctx Context) *HTMLRender {
-	return ctx.MustGet(k_PONGO_TO_GIN_KEY).(*HTMLRender)
+	return ctx.MustGet(key).(*HTMLRender)
 }
 
 func ToContext(ctx Context, r *HTMLRender) {
-	ctx.Set(k_PONGO_TO_GIN_KEY, r)
+	ctx.Set(key, r)
 }
