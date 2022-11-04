@@ -30,4 +30,3 @@ gin-bin
 .idea/*
 logs/*
 *.iml
-go.sum

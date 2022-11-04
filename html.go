@@ -25,35 +25,33 @@ func NewHTMLRender(templateDir string) *HTMLRender {
 }
 
 func (this *HTMLRender) Instance(name string, data interface{}) render.Render {
-	var gHtml = &Template{}
-	var h = this.Template(name)
-	gHtml.Template = h
-	gHtml.data = data
-	return gHtml
+	var html = &HTML{}
+	html.Template = this.Template(name)
+	html.data = data
+	return html
 }
 
 func (this *HTMLRender) InstanceFromString(tpl string, data interface{}) render.Render {
-	var gHtml = &Template{}
-	var h = this.TemplateFromString(tpl)
-	gHtml.Template = h
-	gHtml.data = data
-	return gHtml
+	var html = &HTML{}
+	html.Template = this.TemplateFromString(tpl)
+	html.data = data
+	return html
 }
 
-type Template struct {
+type HTML struct {
 	*pongo2render.Template
 	data interface{}
 }
 
-func (this *Template) Render(w http.ResponseWriter) (err error) {
+func (this *HTML) Render(w http.ResponseWriter) (err error) {
 	return this.Template.ExecuteWriter(w, this.data)
 }
 
-func (this *Template) WriteContentType(w http.ResponseWriter) {
+func (this *HTML) WriteContentType(w http.ResponseWriter) {
 	pongo2render.WriteContentType(w, []string{"text/html; charset=utf-8"})
 }
 
-const key = "pongo2gin"
+const key = "_pongo2gin_"
 
 type Context interface {
 	Set(key string, value interface{})
